@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الشخصية</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    {% for msg in messages %}
+        <script>alert("{{msg}}")</script>
+    {% endfor %}
+    
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
+    
+    <div class="overlay">
+        <i>x</i>
+        <h1>جميع الروابط</h1>
+        
+        <div class="list">
+            {% for endpoint in endpoints %}
+                <a href="http://{{endpoint.tenant}}.localhost:8000/endpoint/{{endpoint.name}}">http://{{endpoint.tenant}}.localhost:8000/endpoint/{{endpoint.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form class="container" method="POST">
+        <h1>Radwan Gaber</h1>
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="اسم الرابط">
+        <textarea name="json" placeholder="البيانات" id=""></textarea>
+        <div class="btns profile">
+            <button type="submit">انشاء</button>
+            <button id="linksList" type="button">جميع الروابط</button>
+            <button type="button" onclick="window.location.href = '/logout' ">تسجيل الخروج</button>
+        </div>
+    </form>
+
+    <script>
+        var overlay = document.querySelector('.overlay');
+        var openOverlay = document.querySelector('#linksList');
+        var closeOverlay = overlay.querySelector('i');
+
+        openOverlay.addEventListener('click',()=>{
+            overlay.classList.add('view')
+        })
+
+        closeOverlay.addEventListener('click',()=>{
+            overlay.classList.remove('view')
+        })
+    </script>
+
+</body>
+</html>
